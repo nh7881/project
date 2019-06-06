@@ -12,7 +12,10 @@ import java.util.ResourceBundle;
  * Description: TODO
  */
 public class ResultDialogController implements BaseController {
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
 }
