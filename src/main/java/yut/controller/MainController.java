@@ -1,6 +1,7 @@
 package yut.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -14,9 +15,16 @@ import java.util.ResourceBundle;
 
 public class MainController implements BaseController {
 
+    @FXML
+    private UserBoardController userBoardController;
+
+    @FXML
+    private GameBoardController gameBoardController;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        gameBoardController.renderGameGrid();
     }
 
     /**
