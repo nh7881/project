@@ -1,5 +1,8 @@
 package yut.controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,13 +11,17 @@ import java.util.ResourceBundle;
  *
  * @author xiaohun
  * Date: 2019/6/6
- * Time: 0:54
+ * Time: 14:52
  * Description: TODO
  */
-public class GameBoardController implements BaseController {
+public class UserStateBarController implements BaseController {
+
+    @FXML
+    private Label userNoLab;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
 }

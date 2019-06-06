@@ -44,14 +44,13 @@ public class MainController implements BaseController {
             e.printStackTrace();
         }
         Stage dialogStage = new Stage();
+        dialogStage.initOwner(YutGameApp.getPrimaryStage());
         dialogStage.setTitle("New Game");
         dialogStage.initModality(Modality.WINDOW_MODAL);
         Scene scene = new Scene(page);
-        dialogStage.setScene(scene);
 
-        // Set the person into the controller.
+        dialogStage.setScene(scene);
         StartDialogController controller = loader.getController();
-        controller.setDialogStage(dialogStage);
 
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();

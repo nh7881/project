@@ -3,10 +3,12 @@ package yut.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import yut.YutGameApp;
 import yut.utils.SettingUtil;
 
 import java.net.URL;
@@ -21,9 +23,6 @@ import java.util.ResourceBundle;
  * Description: TODO
  */
 public class StartDialogController implements BaseController {
-
-    @Setter
-    private Stage dialogStage;
 
     @Getter
     private boolean startAllow;
@@ -60,6 +59,7 @@ public class StartDialogController implements BaseController {
 
         if (playerCountNum > playerMaxCountNum || markerCountNum > markerMaxCountNum) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(YutGameApp.getPrimaryStage());
             alert.setTitle("Error");
             alert.setHeaderText("Exceed the limit");
             alert.setContentText("The number of players or markers exceeds the limit");
@@ -68,7 +68,8 @@ public class StartDialogController implements BaseController {
             startAllow = true;
             this.playerCountNum = playerCountNum;
             this.markerCountNum = markerCountNum;
-            this.dialogStage.close();
+            Stage window = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            window.close();
         }
     }
 }

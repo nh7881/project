@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  * Time: 0:54
  * Description: TODO
  */
-public class GameBoardController implements BaseController {
+public class UserBoardController implements BaseController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

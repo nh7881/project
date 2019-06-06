@@ -5,8 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 public class YutGameApp extends Application {
+
+    @Getter
+    private static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
