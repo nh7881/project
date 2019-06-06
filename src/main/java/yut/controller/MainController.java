@@ -1,4 +1,4 @@
-package sample.controller;
+package yut.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

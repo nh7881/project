@@ -1,4 +1,4 @@
-package sample.controller;
+package yut.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,10 +8,10 @@ import java.util.ResourceBundle;
  *
  * @author xiaohun
  * Date: 2019/6/6
- * Time: 0:54
+ * Time: 14:52
  * Description: TODO
  */
-public class GameBoardController implements BaseController {
+public class ResultDialogController implements BaseController {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
