@@ -88,6 +88,7 @@ public class UserMarkerBarController implements BaseController {
         for (Node node : markerHBox.getChildren()) {
             if (node.getUserData().equals(marker)) {
                 markerHBox.getChildren().remove(node);
+                return;
             }
         }
     }

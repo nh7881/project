@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Getter;
 import yut.YutGameApp;
 import yut.utils.ContextUtil;
 
@@ -16,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements BaseController {
 
+    @Getter
     @FXML
     private UserBoardController userBoardController;
 
@@ -25,7 +27,7 @@ public class MainController implements BaseController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userBoardController.init(this);
-        gameBoardController.renderGameGrid();
+        gameBoardController.init(this);
     }
 
     /**
@@ -45,9 +47,6 @@ public class MainController implements BaseController {
             int playerCountNum = controller.getPlayerCountNum();
             int markerCountNum = controller.getMarkerCountNum();
             userBoardController.initPlayer(playerCountNum, markerCountNum);
-
-            //start game now!!!
-            playGame();
         }
     }
 

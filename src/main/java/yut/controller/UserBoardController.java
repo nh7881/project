@@ -99,7 +99,7 @@ public class UserBoardController implements BaseController {
                 for (int j = 0; j < markerCount; j++) {
                     Marker marker = new Marker();
                     marker.setId(j);
-                    marker.setIndex(-1);
+                    marker.setIndex(0);
                     marker.setOwnPlayer(player);
                     markerList.add(marker);
                 }
@@ -176,6 +176,7 @@ public class UserBoardController implements BaseController {
         for (Node node : scoreHBox.getChildren()) {
             if (node.getUserData().equals(score)) {
                 scoreHBox.getChildren().remove(node);
+                return;
             }
         }
     }

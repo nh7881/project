@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import yut.YutGameApp;
-import yut.model.Player;
+import yut.model.Marker;
+import yut.utils.ContextUtil;
+import yut.utils.SettingUtil;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,24 +27,24 @@ import static javafx.scene.Cursor.HAND;
 public class GameBoardController implements BaseController {
     /**
      * have 29 game grids in all
-     *
+     * <p>
      * 10    9    8    7    6    5
-     *
+     * <p>
      * 11   20             21    4
-     *
+     * <p>
      * 12       22     23        3
-     *
+     * <p>
      * 13          24            2
-     *
+     * <p>
      * 14     25         26      1
-     *
-     *    27                 28
-     *
+     * <p>
+     * 27                 28
+     * <p>
      * 15   16   17   18    19   0
      */
     List<ImageView> gameGridList = new ArrayList<>(29);
 
-    List<Player> player_list = new ArrayList<>();
+    MainController mainController;
 
     @FXML
     private AnchorPane gameGridPane;
@@ -61,9 +63,24 @@ public class GameBoardController implements BaseController {
             gameGrid.setFitHeight(width);
 
             //mouse release event
-            gameGrid.setOnMouseReleased(event -> System.out.println(((ImageView) event.getSource()).getId()));
+            gameGrid.setOnMouseReleased(event -> {
+                ImageView imageView = (ImageView) event.getSource();
+                Marker marker = (Marker) imageView.getUserData();
+                if (marker != null) {
+                    //set this marker is current marker, forward form here
+                    ContextUtil.saveData(ContextUtil.ContextKey.CURRENT_MARKER, marker);
+                    return;
+                }
+                //forward in here
+                forWard((Marker) ContextUtil.getData(ContextUtil.ContextKey.CURRENT_MARKER), Integer.parseInt(imageView.getId()));
+            });
             gameGridList.add(gameGrid);
         }
+    }
+
+    public void init(MainController mainController) {
+        this.mainController = mainController;
+        this.renderGameGrid();
     }
 
     /**
@@ -128,7 +145,46 @@ public class GameBoardController implements BaseController {
         });
     }
 
-    public void setRoadSignImage(ImageView gameGrid) {
+    /**
+     * forward or back
+     *
+     * @param marker
+     * @param targetIndex forward where, index of grid
+     */
+    public boolean forWard(Marker marker, int targetIndex) {
+        if (marker == null) {
+            return false;
+        }
+
+        List<Integer> allScores = this.mainController.getUserBoardController().getAllScore();
+        int stepCount = targetIndex - marker.getIndex();
+        if (allScores.contains(stepCount)) {
+            //can forward target
+            ImageView start = gameGridList.get(marker.getIndex());
+            ImageView target = gameGridList.get(targetIndex);
+
+            //reset grid image
+            start.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/blue_marker.png")));
+            this.setRoadSignImage(start);
+
+            //forward
+            String playerAnimal = SettingUtil.getProperty("player" + marker.getOwnPlayer().getId() + "Animal");
+            target.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/marker/" + playerAnimal + ".png")));
+            target.setRotate(0);
+
+            //save all data
+            target.setUserData(marker);
+            marker.setIndex(targetIndex);
+
+            //delete button in user marker bar
+            this.mainController.getUserBoardController().removeMarkerBtn((Marker) ContextUtil.getData(ContextUtil.ContextKey.CURRENT_MARKER));
+            this.mainController.getUserBoardController().removeScoreImageView(stepCount);
+        }
+
+        return true;
+    }
+
+    private void setRoadSignImage(ImageView gameGrid) {
         int gridId = Integer.parseInt(gameGrid.getId());
 
         if (gridId == 0 || gridId == 5 || gridId == 10 || gridId == 15 || gridId == 24) {
