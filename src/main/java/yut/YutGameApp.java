@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.Getter;
+import yut.utils.ContextUtil;
 
 public class YutGameApp extends Application {
 
@@ -21,6 +22,7 @@ public class YutGameApp extends Application {
         primaryStage.show();
 
         this.primaryStage = primaryStage;
+        ContextUtil.saveData(ContextUtil.ContextKey.IS_START, false);
     }
 
     public static void main(String[] args) {

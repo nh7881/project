@@ -17,7 +17,7 @@ public class YutUtil {
      * @return score
      */
     public static int throwYut() {
-        int score = RandomUtil.randomInt(0, 7);
+        int score = RandomUtil.randomInt(1, 7);
         return score == 6 ? -1 : score;
     }
 }

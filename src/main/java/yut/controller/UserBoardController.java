@@ -1,9 +1,13 @@
 package yut.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -12,6 +16,8 @@ import lombok.Getter;
 import yut.YutGameApp;
 import yut.model.Marker;
 import yut.model.Player;
+import yut.utils.ContextUtil;
+import yut.utils.YutUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -97,6 +103,31 @@ public class UserBoardController implements BaseController {
         //render user marker bar
         renderUserMarkerBar();
         return this.getPlayerList();
+    }
+
+
+    /**
+     * throw button click event
+     *
+     * @param event
+     */
+    public void handleThrow(ActionEvent event) {
+        if(!(Boolean) ContextUtil.getData(ContextUtil.ContextKey.IS_START)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(YutGameApp.getPrimaryStage());
+            alert.setTitle("Error");
+            alert.setHeaderText("Please start game first!");
+            alert.showAndWait();
+            return;
+        }
+
+        int score = YutUtil.throwYut();
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(50.0);
+        imageView.setFitHeight(50.0);
+        imageView.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/score/circle" + score + ".png")));
+        imageView.setUserData(score);
+        scoreHBox.getChildren().add(imageView);
     }
 
     /**

@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import yut.YutGameApp;
+import yut.utils.ContextUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,9 +34,12 @@ public class MainController implements BaseController {
      */
     public void startNewGame(ActionEvent event) {
         //invoke StartDialog
+        ContextUtil.saveData(ContextUtil.ContextKey.IS_START, false);
         StartDialogController controller = invokeStartDialog();
 
         if (controller.isStartAllow()) {
+            ContextUtil.saveData(ContextUtil.ContextKey.IS_START, true);
+
             //init game data
             int playerCountNum = controller.getPlayerCountNum();
             int markerCountNum = controller.getMarkerCountNum();

@@ -28,20 +28,8 @@
          </font>
       </Label>
       <HBox fx:id="scoreHBox" alignment="CENTER_LEFT" layoutX="12.0" layoutY="353.0" prefHeight="60.0" prefWidth="263.0" spacing="5.0" style="-fx-border-color: black; -fx-border-radius: 5;">
-         <children>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="/res/score/circle1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="/res/score/circle3.png" />
-               </image>
-            </ImageView>
-         </children>
       </HBox>
-      <Button fx:id="throwBtn" layoutX="12.0" layoutY="423.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="263.0" style="-fx-background-color: #56AFC1; -fx-border-color: #246E88; -fx-border-width: 5; -fx-background-radius: 8; -fx-border-radius: 8;" text="THROW" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+      <Button fx:id="throwBtn" layoutX="12.0" layoutY="423.0" mnemonicParsing="false" onAction="#handleThrow" prefHeight="56.0" prefWidth="263.0" style="-fx-background-color: #56AFC1; -fx-border-color: #246E88; -fx-border-width: 5; -fx-background-radius: 8; -fx-border-radius: 8;" text="THROW" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
          <rotationAxis>
             <Point3D />
          </rotationAxis>
