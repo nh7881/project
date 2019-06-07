@@ -70,7 +70,7 @@ public class UserBoardController implements BaseController {
         });
     }
 
-    public void init(MainController mainController){
+    public void init(MainController mainController) {
         this.mainController = mainController;
     }
 
@@ -112,9 +112,7 @@ public class UserBoardController implements BaseController {
         return this.getPlayerList();
     }
 
-
     /**
-     *
      * @param marker
      */
     public void addMarkerBtn(Marker marker) {
@@ -125,37 +123,12 @@ public class UserBoardController implements BaseController {
     }
 
     /**
-     *
      * @param marker
      */
     public void removeMarkerBtn(Marker marker) {
         Player player = marker.getOwnPlayer();
         //get player own userMarkerBar
         userMarkerBarControllerMap.get(player).removeMarkerBtn(marker);
-    }
-
-    /**
-     * throw button click event
-     *
-     * @param event
-     */
-    public void handleThrow(ActionEvent event) {
-        if (!(Boolean) ContextUtil.getData(ContextUtil.ContextKey.IS_START)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(YutGameApp.getPrimaryStage());
-            alert.setTitle("Error");
-            alert.setHeaderText("Please start game first!");
-            alert.showAndWait();
-            return;
-        }
-
-        int score = YutUtil.throwYut();
-        ImageView imageView = new ImageView();
-        imageView.setFitWidth(50.0);
-        imageView.setFitHeight(50.0);
-        imageView.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/score/circle" + score + ".png")));
-        imageView.setUserData(score);
-        scoreHBox.getChildren().add(imageView);
     }
 
     /**
@@ -188,6 +161,39 @@ public class UserBoardController implements BaseController {
      */
     public void setProcessStateText(String stateText) {
         processState.setText(stateText);
+    }
+
+    public Player getNextPlayer(Player player) {
+        int index = this.getPlayerList().indexOf(player);
+        if (index + 1 > this.getPlayerList().size() - 1) {
+            return this.getPlayerList().get(0);
+        } else {
+            return this.getPlayerList().get(index + 1);
+        }
+    }
+
+    /**
+     * throw button click event
+     *
+     * @param event
+     */
+    public void handleThrow(ActionEvent event) {
+        if (!(Boolean) ContextUtil.getData(ContextUtil.ContextKey.IS_START)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(YutGameApp.getPrimaryStage());
+            alert.setTitle("Error");
+            alert.setHeaderText("Please start game first!");
+            alert.showAndWait();
+            return;
+        }
+
+        int score = YutUtil.throwYut();
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(50.0);
+        imageView.setFitHeight(50.0);
+        imageView.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/score/circle" + score + ".png")));
+        imageView.setUserData(score);
+        scoreHBox.getChildren().add(imageView);
     }
 
     private void renderUserMarkerBar() {

@@ -22,7 +22,7 @@ public class YutGameApp extends Application {
         primaryStage.show();
 
         this.primaryStage = primaryStage;
-        ContextUtil.saveData(ContextUtil.ContextKey.IS_START, false);
+        ContextUtil.setData(ContextUtil.ContextKey.IS_START, false);
     }
 
     public static void main(String[] args) {

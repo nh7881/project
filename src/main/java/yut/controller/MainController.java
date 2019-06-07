@@ -1,5 +1,6 @@
 package yut.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,10 @@ import yut.utils.ContextUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class MainController implements BaseController {
 
@@ -23,6 +28,8 @@ public class MainController implements BaseController {
 
     @FXML
     private GameBoardController gameBoardController;
+
+    ExecutorService executorService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,16 +44,46 @@ public class MainController implements BaseController {
      */
     public void startNewGame(ActionEvent event) {
         //invoke StartDialog
-        ContextUtil.saveData(ContextUtil.ContextKey.IS_START, false);
+        ContextUtil.setData(ContextUtil.ContextKey.IS_START, false);
         StartDialogController controller = invokeStartDialog();
 
+        //shutdown old thread pool
+        if (this.executorService != null) {
+            this.executorService.shutdownNow();
+        }
+
         if (controller.isStartAllow()) {
-            ContextUtil.saveData(ContextUtil.ContextKey.IS_START, true);
+            ContextUtil.setData(ContextUtil.ContextKey.IS_START, true);
 
             //init game data
             int playerCountNum = controller.getPlayerCountNum();
             int markerCountNum = controller.getMarkerCountNum();
             userBoardController.initPlayer(playerCountNum, markerCountNum);
+
+            //set current player is play1
+            ContextUtil.setCurrentPlayer(userBoardController.getPlayerList().get(0));
+
+            Runnable gameRule = () -> {
+                while (true) {
+                    String processStateText = String.format("Play %d's Turn!!", ContextUtil.getCurrentPlayer().getId() + 1);
+
+                    Platform.runLater(() -> userBoardController.setProcessStateText(processStateText));
+
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            Runnable gameGridTip = () -> {
+
+            };
+
+            this.executorService = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+            this.executorService.submit(gameRule);
+//            this.executorService.submit(gameGridTip);
         }
     }
 
@@ -78,7 +115,7 @@ public class MainController implements BaseController {
 
 
     //algorithm implement
-    public void playGame(){
+    public void playGame() {
 //        Player.isWin();
 //        userBoardController.getPlayerList();
 //        userBoardController.getAllScore();

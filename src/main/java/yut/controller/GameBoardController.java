@@ -67,12 +67,23 @@ public class GameBoardController implements BaseController {
                 ImageView imageView = (ImageView) event.getSource();
                 Marker marker = (Marker) imageView.getUserData();
                 if (marker != null) {
-                    //set this marker is current marker, forward form here
-                    ContextUtil.saveData(ContextUtil.ContextKey.CURRENT_MARKER, marker);
-                    return;
+                    if(checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))){
+                        //eat other player's marker, make it go back user marker bar
+                        this.mainController.getUserBoardController().addMarkerBtn(marker);
+                    }else {
+                        //set this marker is current marker, forward form here
+                        ContextUtil.setCurrentMarker(marker);
+                        return;
+                    }
                 }
                 //forward in here
-                forWard((Marker) ContextUtil.getData(ContextUtil.ContextKey.CURRENT_MARKER), Integer.parseInt(imageView.getId()));
+                if(checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))){
+                    forWard(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()));
+                }
+
+                if (this.mainController.getUserBoardController().getAllScore().size() == 0) {
+                    ContextUtil.setCurrentPlayer(this.mainController.getUserBoardController().getNextPlayer(ContextUtil.getCurrentMarker().getOwnPlayer()));
+                }
             });
             gameGridList.add(gameGrid);
         }
@@ -151,37 +162,40 @@ public class GameBoardController implements BaseController {
      * @param marker
      * @param targetIndex forward where, index of grid
      */
-    public boolean forWard(Marker marker, int targetIndex) {
+    public void forWard(Marker marker, int targetIndex) {
+        int stepCount = targetIndex - marker.getIndex();
+
+        //can forward target
+        ImageView start = gameGridList.get(marker.getIndex());
+        ImageView target = gameGridList.get(targetIndex);
+
+        //reset grid image
+        start.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/blue_marker.png")));
+        this.setRoadSignImage(start);
+
+        //forward
+        String playerAnimal = SettingUtil.getProperty("player" + marker.getOwnPlayer().getId() + "Animal");
+        target.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/marker/" + playerAnimal + ".png")));
+        target.setRotate(0);
+
+        //save all data
+        target.setUserData(marker);
+        marker.setIndex(targetIndex);
+
+        //delete button in user marker bar
+        this.mainController.getUserBoardController().removeMarkerBtn(ContextUtil.getCurrentMarker());
+        this.mainController.getUserBoardController().removeScoreImageView(stepCount);
+    }
+
+    public boolean checkForward(Marker marker, int targetIndex){
         if (marker == null) {
             return false;
         }
 
         List<Integer> allScores = this.mainController.getUserBoardController().getAllScore();
         int stepCount = targetIndex - marker.getIndex();
-        if (allScores.contains(stepCount)) {
-            //can forward target
-            ImageView start = gameGridList.get(marker.getIndex());
-            ImageView target = gameGridList.get(targetIndex);
 
-            //reset grid image
-            start.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/blue_marker.png")));
-            this.setRoadSignImage(start);
-
-            //forward
-            String playerAnimal = SettingUtil.getProperty("player" + marker.getOwnPlayer().getId() + "Animal");
-            target.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/marker/" + playerAnimal + ".png")));
-            target.setRotate(0);
-
-            //save all data
-            target.setUserData(marker);
-            marker.setIndex(targetIndex);
-
-            //delete button in user marker bar
-            this.mainController.getUserBoardController().removeMarkerBtn((Marker) ContextUtil.getData(ContextUtil.ContextKey.CURRENT_MARKER));
-            this.mainController.getUserBoardController().removeScoreImageView(stepCount);
-        }
-
-        return true;
+        return allScores.contains(stepCount);
     }
 
     private void setRoadSignImage(ImageView gameGrid) {

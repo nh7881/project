@@ -75,7 +75,7 @@ public class UserMarkerBarController implements BaseController {
             Marker eventMarker = (Marker) eventBtn.getUserData();
 
             //save current marker
-            ContextUtil.saveData(ContextUtil.ContextKey.CURRENT_MARKER, eventMarker);
+            ContextUtil.setCurrentMarker(eventMarker);
             System.out.println("current player: " + eventMarker.getOwnPlayer().getId() +", marker:" + marker.getId());
         });
         markerHBox.getChildren().add(button);
