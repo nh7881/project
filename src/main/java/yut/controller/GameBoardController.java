@@ -1,11 +1,11 @@
 package yut.controller;
 
 import javafx.fxml.FXML;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import yut.YutGameApp;
+import yut.model.Player;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,31 +25,29 @@ import static javafx.scene.Cursor.HAND;
 public class GameBoardController implements BaseController {
     /**
      * have 29 game grids in all
-     * <p>
+     *
      * 10    9    8    7    6    5
-     * <p>
+     *
      * 11   20             21    4
-     * <p>
+     *
      * 12       22     23        3
-     * <p>
+     *
      * 13          24            2
-     * <p>
+     *
      * 14     25         26      1
-     * <p>
-     * 27                28
-     * <p>
+     *
+     *    27                 28
+     *
      * 15   16   17   18    19   0
      */
     List<ImageView> gameGridList = new ArrayList<>(29);
-    
-    List<Player> player_list = new ArrayList<Player>();
-	List<Yut> yut_list = new ArrayList<Yut>();
+
+    List<Player> player_list = new ArrayList<>();
 
     @FXML
     private AnchorPane gameGridPane;
 
-    
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         float width = 55;
@@ -150,23 +148,5 @@ public class GameBoardController implements BaseController {
                     break;
             }
         }
-    }
-    public int throw_yut(List<Yut> yut_list) {
-    	int yut_go = 0;
-    	Random rand = new Random();
-    	boolean back_do = false;
-    	for(int i = 0; i<Integer.parseInt(SettingUtil.getProperty("yutCount")); i++) {
-    		Yut temp_yut = yut_list.get(i); 
-    		temp_yut.isback = rand.nextBoolean();
-    		if (temp_yut.isback == true) {
-    			if (temp_yut.back_do == true) {
-    				back_do = true;
-    			}
-    			yut_go = yut_go + 1;
-    		}    		
-    	}
-    	if ( (back_do == true) && (yut_go == 1)) return -1;
-    	else if (yut_go == 0) return 5;
-    	else return yut_go;
     }
 }

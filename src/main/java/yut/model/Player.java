@@ -1,5 +1,10 @@
 package yut.model;
 
+
+import lombok.Data;
+
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA
  *
@@ -8,11 +13,8 @@ package yut.model;
  * Time: 14:59
  * Description: TODO
  */
+
+@Data
 public class Player {
-	public Player(Object marker_shape ,int marker_num) {
-		List<Marker> marker_list = new ArrayList<Marker>();
-    	for(int i = 0; i < marker_num; i++) {
-    		marker_list.add(new Marker(marker_shape));
-    	}
-	}
+	private List<Marker> markerList;
 }

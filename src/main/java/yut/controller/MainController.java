@@ -65,13 +65,13 @@ public class MainController implements BaseController {
 
         return controller.isStartAllow();
     }
-    private List<Yut> makeyut() {
-    	
-    	List<Yut> yut_list = new ArrayList<Yut>();
-    	for(int i = 0; i < Integer.parseInt(SettingUtil.getProperty("yutCount")); i++) {
-    		if(i == 0) yut_list.add(new Yut(true)); 
-    		else yut_list.add(new Yut(false));
-    	}
-    	return yut_list;
-    }
+//    private List<Yut> makeyut() {
+//
+//    	List<Yut> yut_list = new ArrayList<Yut>();
+//    	for(int i = 0; i < Integer.parseInt(SettingUtil.getProperty("yutCount")); i++) {
+//    		if(i == 0) yut_list.add(new Yut(true));
+//    		else yut_list.add(new Yut(false));
+//    	}
+//    	return yut_list;
+//    }
 }
