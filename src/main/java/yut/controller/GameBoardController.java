@@ -41,10 +41,15 @@ public class GameBoardController implements BaseController {
      * 15   16   17   18    19   0
      */
     List<ImageView> gameGridList = new ArrayList<>(29);
+    
+    List<Player> player_list = new ArrayList<Player>();
+	List<Yut> yut_list = new ArrayList<Yut>();
 
     @FXML
     private AnchorPane gameGridPane;
 
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         float width = 55;
@@ -145,5 +150,23 @@ public class GameBoardController implements BaseController {
                     break;
             }
         }
+    }
+    public int throw_yut(List<Yut> yut_list) {
+    	int yut_go = 0;
+    	Random rand = new Random();
+    	boolean back_do = false;
+    	for(int i = 0; i<Integer.parseInt(SettingUtil.getProperty("yutCount")); i++) {
+    		Yut temp_yut = yut_list.get(i); 
+    		temp_yut.isback = rand.nextBoolean();
+    		if (temp_yut.isback == true) {
+    			if (temp_yut.back_do == true) {
+    				back_do = true;
+    			}
+    			yut_go = yut_go + 1;
+    		}    		
+    	}
+    	if ( (back_do == true) && (yut_go == 1)) return -1;
+    	else if (yut_go == 0) return 5;
+    	else return yut_go;
     }
 }
