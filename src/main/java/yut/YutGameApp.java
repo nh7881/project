@@ -19,8 +19,9 @@ public class YutGameApp extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
 
+        this.primaryStage = primaryStage;
+    }
 
     public static void main(String[] args) {
         launch(args);
