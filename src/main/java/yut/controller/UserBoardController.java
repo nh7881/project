@@ -3,6 +3,7 @@ package yut.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ import yut.utils.YutUtil;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA
@@ -65,7 +67,6 @@ public class UserBoardController implements BaseController {
             button.setStyle("-fx-background-color: #56AFC1; -fx-border-color: #246E88; -fx-border-width: 5; -fx-background-radius: 8; -fx-border-radius: 8;");
         });
     }
-
 
     /**
      * init all
@@ -112,7 +113,7 @@ public class UserBoardController implements BaseController {
      * @param event
      */
     public void handleThrow(ActionEvent event) {
-        if(!(Boolean) ContextUtil.getData(ContextUtil.ContextKey.IS_START)){
+        if (!(Boolean) ContextUtil.getData(ContextUtil.ContextKey.IS_START)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(YutGameApp.getPrimaryStage());
             alert.setTitle("Error");
@@ -131,6 +132,28 @@ public class UserBoardController implements BaseController {
     }
 
     /**
+     * get all score for this
+     */
+    public List<Integer> getAllScore() {
+        return scoreHBox.getChildren().stream()
+                .map(image -> (Integer) image.getUserData())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * remove a score imageView form scoreHBox
+     *
+     * @param score
+     */
+    public void removeScoreImageView(int score) {
+        for (Node node : scoreHBox.getChildren()) {
+            if (node.getUserData().equals(score)) {
+                scoreHBox.getChildren().remove(node);
+            }
+        }
+    }
+
+    /**
      * set process state lable text
      *
      * @param stateText
@@ -139,8 +162,11 @@ public class UserBoardController implements BaseController {
         processState.setText(stateText);
     }
 
-
     private void renderUserMarkerBar() {
+        //clear first
+        userMarkerBarControllerMap.clear();
+        userMarkerBox.getChildren().clear();
+
         this.getPlayerList().forEach(player -> {
             try {
                 FXMLLoader loader = new FXMLLoader();

@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.Getter;
-import lombok.Setter;
 import yut.YutGameApp;
 import yut.utils.SettingUtil;
 
@@ -57,7 +56,7 @@ public class StartDialogController implements BaseController {
         int playerMaxCountNum = Integer.parseInt(SettingUtil.getProperty("playerMaxCount"));
         int markerMaxCountNum = Integer.parseInt(SettingUtil.getProperty("markerMaxCount"));
 
-        if (playerCountNum > playerMaxCountNum || markerCountNum > markerMaxCountNum) {
+        if (playerCountNum < 2 || playerCountNum > playerMaxCountNum || markerCountNum == 0 || markerCountNum > markerMaxCountNum) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(YutGameApp.getPrimaryStage());
             alert.setTitle("Error");

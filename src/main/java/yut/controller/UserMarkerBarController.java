@@ -12,8 +12,11 @@ import lombok.Getter;
 import lombok.Setter;
 import yut.model.Marker;
 import yut.model.Player;
+import yut.utils.SettingUtil;
 
 import java.net.URL;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -46,6 +49,9 @@ public class UserMarkerBarController implements BaseController {
         //render player
         userNoLab.setText(String.valueOf(this.getPlayer().getId() + 1));
 
+        //get player animal icon
+        String playerAnimal = SettingUtil.getProperty("player" + player.getId() + "Animal");
+
         //render marker
         this.getPlayer().getMarkerList().forEach(marker -> {
             Button button = new Button();
@@ -53,7 +59,7 @@ public class UserMarkerBarController implements BaseController {
             button.setPrefWidth(33.0);
             button.setCursor(Cursor.HAND);
             button.setTextAlignment(TextAlignment.CENTER);
-            button.setStyle("-fx-background-image: url(/res/marker/bird_icon.png); -fx-background-position: center center; -fx-background-size: stretch stretch;");
+            button.setStyle("-fx-background-image: url(/res/marker/" + playerAnimal + ".png); -fx-background-position: center center; -fx-background-size: stretch stretch;");
 
             //set marker object for each marker button
             button.setUserData(marker);
