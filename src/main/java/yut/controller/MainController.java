@@ -21,7 +21,6 @@ public class MainController implements BaseController {
     @FXML
     private GameBoardController gameBoardController;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gameBoardController.renderGameGrid();
@@ -34,13 +33,17 @@ public class MainController implements BaseController {
      */
     public void startNewGame(ActionEvent event) {
         //invoke StartDialog
-        if (invokeStartDialog()) {
-            //init game data
+        StartDialogController controller = invokeStartDialog();
 
+        if (controller.isStartAllow()) {
+            //init game data
+            int playerCountNum = controller.getPlayerCountNum();
+            int markerCountNum = controller.getMarkerCountNum();
+            userBoardController.initPlayer(playerCountNum, markerCountNum);
         }
     }
 
-    private boolean invokeStartDialog() {
+    private StartDialogController invokeStartDialog() {
         FXMLLoader loader = null;
         AnchorPane page = null;
         try {
@@ -63,15 +66,6 @@ public class MainController implements BaseController {
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
 
-        return controller.isStartAllow();
+        return controller;
     }
-//    private List<Yut> makeyut() {
-//
-//    	List<Yut> yut_list = new ArrayList<Yut>();
-//    	for(int i = 0; i < Integer.parseInt(SettingUtil.getProperty("yutCount")); i++) {
-//    		if(i == 0) yut_list.add(new Yut(true));
-//    		else yut_list.add(new Yut(false));
-//    	}
-//    	return yut_list;
-//    }
 }
