@@ -85,6 +85,9 @@ public class MainController implements BaseController {
 
     //algorithm implement
     public void playGame(){
-
+//        userBoardController.getPlayerList();
+//        userBoardController.getAllScore();
+//        userBoardController.setProcessStateText("asdasd");
+//        userBoardController.removeScoreImageView(3);
     }
 }
