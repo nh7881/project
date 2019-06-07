@@ -7,7 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 import yut.YutGameApp;
+import yut.model.Marker;
 import yut.utils.ContextUtil;
 
 import java.io.IOException;
@@ -15,6 +18,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements BaseController {
+
+    @Setter @Getter
+    private Marker currentMarker;
 
     @FXML
     private UserBoardController userBoardController;
@@ -44,6 +50,9 @@ public class MainController implements BaseController {
             int playerCountNum = controller.getPlayerCountNum();
             int markerCountNum = controller.getMarkerCountNum();
             userBoardController.initPlayer(playerCountNum, markerCountNum);
+
+            //start game now!!!
+            playGame();
         }
     }
 
@@ -71,5 +80,11 @@ public class MainController implements BaseController {
         dialogStage.showAndWait();
 
         return controller;
+    }
+
+
+    //algorithm implement
+    public void playGame(){
+
     }
 }

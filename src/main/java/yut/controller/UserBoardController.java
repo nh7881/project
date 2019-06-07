@@ -165,6 +165,7 @@ public class UserBoardController implements BaseController {
     private void renderUserMarkerBar() {
         //clear first
         userMarkerBarControllerMap.clear();
+        scoreHBox.getChildren().clear();
         userMarkerBox.getChildren().clear();
 
         this.getPlayerList().forEach(player -> {
