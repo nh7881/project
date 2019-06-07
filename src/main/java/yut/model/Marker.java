@@ -21,6 +21,9 @@ public class Marker {
     //init index is -1
     private Integer index;
 
+    //if this is ended for game
+    private Boolean hasEnded;
+
     private Player ownPlayer;
 
     @Override

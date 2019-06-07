@@ -43,6 +43,8 @@ public class UserBoardController implements BaseController {
      */
     private Map<Player, UserMarkerBarController> userMarkerBarControllerMap = new LinkedHashMap<>();
 
+    MainController mainController;
+
     @FXML
     private VBox userMarkerBox;
 
@@ -66,6 +68,10 @@ public class UserBoardController implements BaseController {
             Button button = (Button) event.getSource();
             button.setStyle("-fx-background-color: #56AFC1; -fx-border-color: #246E88; -fx-border-width: 5; -fx-background-radius: 8; -fx-border-radius: 8;");
         });
+    }
+
+    public void init(MainController mainController){
+        this.mainController = mainController;
     }
 
     /**
@@ -106,6 +112,27 @@ public class UserBoardController implements BaseController {
         return this.getPlayerList();
     }
 
+
+    /**
+     *
+     * @param marker
+     */
+    public void addMarkerBtn(Marker marker) {
+        Player player = marker.getOwnPlayer();
+
+        //get player own userMarkerBar
+        userMarkerBarControllerMap.get(player).addMarkerBtn(marker);
+    }
+
+    /**
+     *
+     * @param marker
+     */
+    public void removeMarkerBtn(Marker marker) {
+        Player player = marker.getOwnPlayer();
+        //get player own userMarkerBar
+        userMarkerBarControllerMap.get(player).removeMarkerBtn(marker);
+    }
 
     /**
      * throw button click event

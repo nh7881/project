@@ -1,9 +1,8 @@
 package yut.controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -12,11 +11,10 @@ import lombok.Getter;
 import lombok.Setter;
 import yut.model.Marker;
 import yut.model.Player;
+import yut.utils.ContextUtil;
 import yut.utils.SettingUtil;
 
 import java.net.URL;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -39,6 +37,7 @@ public class UserMarkerBarController implements BaseController {
     @FXML
     private HBox markerHBox;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -49,27 +48,47 @@ public class UserMarkerBarController implements BaseController {
         //render player
         userNoLab.setText(String.valueOf(this.getPlayer().getId() + 1));
 
+        //render marker
+        this.getPlayer().getMarkerList().forEach(this::addMarkerBtn);
+    }
+
+    /**
+     * @param marker
+     */
+    public void addMarkerBtn(Marker marker) {
         //get player animal icon
         String playerAnimal = SettingUtil.getProperty("player" + player.getId() + "Animal");
 
-        //render marker
-        this.getPlayer().getMarkerList().forEach(marker -> {
-            Button button = new Button();
-            button.setPrefHeight(33.0);
-            button.setPrefWidth(33.0);
-            button.setCursor(Cursor.HAND);
-            button.setTextAlignment(TextAlignment.CENTER);
-            button.setStyle("-fx-background-image: url(/res/marker/" + playerAnimal + ".png); -fx-background-position: center center; -fx-background-size: stretch stretch;");
+        Button button = new Button();
+        button.setPrefHeight(33.0);
+        button.setPrefWidth(33.0);
+        button.setCursor(Cursor.HAND);
+        button.setTextAlignment(TextAlignment.CENTER);
+        button.setStyle("-fx-background-image: url(/res/marker/" + playerAnimal + ".png); -fx-background-position: center center; -fx-background-size: stretch stretch;");
 
-            //set marker object for each marker button
-            button.setUserData(marker);
+        //set marker object for each marker button
+        button.setUserData(marker);
 
-            //handle marker btn clicked event
-            button.setOnAction(event -> {
-                Button eventBtn = (Button) event.getSource();
-                System.out.println(((Marker) eventBtn.getUserData()).getId());
-            });
-            markerHBox.getChildren().add(button);
+        //handle marker btn clicked event
+        button.setOnAction(event -> {
+            Button eventBtn = (Button) event.getSource();
+            Marker eventMarker = (Marker) eventBtn.getUserData();
+
+            //save current marker
+            ContextUtil.saveData(ContextUtil.ContextKey.CURRENT_MARKER, eventMarker);
+            System.out.println("current player: " + eventMarker.getOwnPlayer().getId() +", marker:" + marker.getId());
         });
+        markerHBox.getChildren().add(button);
+    }
+
+    /**
+     * @param marker
+     */
+    public void removeMarkerBtn(Marker marker) {
+        for (Node node : markerHBox.getChildren()) {
+            if (node.getUserData().equals(marker)) {
+                markerHBox.getChildren().remove(node);
+            }
+        }
     }
 }

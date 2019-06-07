@@ -20,6 +20,15 @@ public class Player {
     private Integer id;
     private List<Marker> markerList;
 
+    boolean isWin() {
+        for (Marker marker : markerList){
+            if(!marker.getHasEnded()){
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

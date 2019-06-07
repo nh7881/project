@@ -25,6 +25,8 @@ public class ContextUtil {
 
     public enum ContextKey {
         //is started
-        IS_START;
+        IS_START,
+        //current marker
+        CURRENT_MARKER;
     }
 }

@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import lombok.Getter;
-import lombok.Setter;
 import yut.YutGameApp;
-import yut.model.Marker;
 import yut.utils.ContextUtil;
 
 import java.io.IOException;
@@ -18,9 +15,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements BaseController {
-
-    @Setter @Getter
-    private Marker currentMarker;
 
     @FXML
     private UserBoardController userBoardController;
@@ -30,6 +24,7 @@ public class MainController implements BaseController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userBoardController.init(this);
         gameBoardController.renderGameGrid();
     }
 
@@ -85,9 +80,12 @@ public class MainController implements BaseController {
 
     //algorithm implement
     public void playGame(){
+//        Player.isWin();
 //        userBoardController.getPlayerList();
 //        userBoardController.getAllScore();
 //        userBoardController.setProcessStateText("asdasd");
 //        userBoardController.removeScoreImageView(3);
+//        userBoardController.removeMarkerBtn(currentMarker);
+//        userBoardController.addMarkerBtn(eatenMarker);
     }
 }
