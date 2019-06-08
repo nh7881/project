@@ -27,6 +27,7 @@
 + import our project by IDE
     + look!! make project by maven!!
 + run as YutGameApp
+    + look!! our project use lombok.jar. so before excute our project, confirm to install lombok.
 
 
 ## Authors
