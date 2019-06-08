@@ -39,7 +39,7 @@ public class GameBoardController implements BaseController {
      * <p>
      * 14     53         74      1
      * <p>
-     *     54                 75
+     * 54                 75
      * <p>
      * 15   16   17   18    19   0
      */
@@ -73,17 +73,17 @@ public class GameBoardController implements BaseController {
                 if (marker != null) {
                     System.out.println("marker data is " + marker.getId());
 
-                    if(checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))){
+                    if (checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))) {
                         //eat other player's marker, make it go back user marker bar
                         this.mainController.getUserBoardController().addMarkerBtn(marker);
-                    }else {
+                    } else {
                         //set this marker is current marker, forward form here
                         ContextUtil.setCurrentMarker(marker);
                         return;
                     }
                 }
                 //forward in here
-                if(checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))){
+                if (checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))) {
                     forWard(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()));
                 }
 
@@ -173,56 +173,46 @@ public class GameBoardController implements BaseController {
 
     // before mark move, position where mark will go change.
     public int changeMarker(int index) {
-        if(index == 5) {
+        if (index == 5) {
             return -45; //first diagonal
-        }
-        else if(index == 10) {
+        } else if (index == 10) {
             return -60; //second diagonal
         }
         return 0;
     }
+
     // after mark move, position where mark gone change.
-    public int changeTarget(int markerIndex, int targetIndex){
-        if(markerIndex > 50 && markerIndex < 56 && targetIndex >14 && targetIndex < 20) {
+    public int changeTarget(int markerIndex, int targetIndex) {
+        if (markerIndex > 50 && markerIndex < 56 && targetIndex > 14 && targetIndex < 20) {
             return 41; // third diagonal
-        }
-        else if((markerIndex < 53 && markerIndex > 50 && targetIndex == 73) ||
+        } else if ((markerIndex < 53 && markerIndex > 50 && targetIndex == 73) ||
                 (markerIndex == 5 && targetIndex == 73)) {
             return -20; //center
-        }
-        else if((markerIndex == 51 && targetIndex == 5) ||
+        } else if ((markerIndex == 51 && targetIndex == 5) ||
                 (markerIndex == 5 && targetIndex == 4)) {
             return 45;
-        }
-        else if((markerIndex == 71 && targetIndex == 10) ||
+        } else if ((markerIndex == 71 && targetIndex == 10) ||
                 (markerIndex == 10 && targetIndex == 9)) {
             return 60;
-        }
-        else if(markerIndex == 0 && targetIndex == 75) {
+        } else if (markerIndex == 0 && targetIndex == 75) {
             return -76;
-        }
-        else if(markerIndex == 54 && targetIndex == 73) {
+        } else if (markerIndex == 54 && targetIndex == 73) {
             return -20;
-        }
-        else if(markerIndex < 20  && markerIndex >= 15  &&targetIndex == 0) {
+        } else if (markerIndex < 20 && markerIndex >= 15 && targetIndex == 0) {
             return 20;
-        }
-        else if(markerIndex > 70 && targetIndex == 0) {
-            return  76;
+        } else if (markerIndex > 70 && targetIndex == 0) {
+            return 76;
         }
         return 0;
     }
+
     // check marker finish
     public int checkMarkerEnd(int targetid, int stepCount) {
         int i = 0;
-        if (targetid == 0 & stepCount >= 0) {
-            for(i = 0;
-                i <this.mainController.getUserBoardController().getAllScore().size();
-                i++ ) {
-                if (stepCount <
-                        this.mainController.getUserBoardController().getAllScore().get(i))
-                {
-                    System.out.println("succed" + targetid + "  " + stepCount);
+        if (targetid == 0 && stepCount >= 0) {
+            for (i = 0; i < this.mainController.getUserBoardController().getAllScore().size(); i++) {
+                if (stepCount < this.mainController.getUserBoardController().getAllScore().get(i)) {
+                    System.out.println("successed " + targetid + "  " + stepCount);
                     return this.mainController.getUserBoardController().getAllScore().get(i);
                 }
             }
@@ -232,15 +222,13 @@ public class GameBoardController implements BaseController {
     }
 
     // change grid id and index
-    public int changeDialog(int index){
+    public int changeDialog(int index) {
         int temp = index;
-        if(index > 70 && index <= 75) {
+        if (index > 70 && index <= 75) {
             temp = temp - 51;
-        }
-        else if(index == 51 || index == 52) {
+        } else if (index == 51 || index == 52) {
             temp = temp - 26;
-        }
-        else if(index == 54 || index == 55) {
+        } else if (index == 54 || index == 55) {
             temp = temp - 27;
         }
         return temp;
@@ -268,12 +256,12 @@ public class GameBoardController implements BaseController {
         this.setRoadSignImage(start);
 
         //check marker end
-        if(checkMarkerEnd(targetIndex, stepCount) != stepCount ) { // when marker finish, discard first score.
+        if (checkMarkerEnd(targetIndex, stepCount) != stepCount) {
+            // when marker finish, discard first score.
             stepCount = checkMarkerEnd(targetIndex, stepCount);
             target.setUserData(null);
             marker.setHasEnded(true);
-        }
-        else {
+        } else {
             //forward
             String playerAnimal = SettingUtil.getProperty("player" + marker.getOwnPlayer().getId() + "Animal");
             target.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/marker/" + playerAnimal + ".png")));
@@ -283,17 +271,17 @@ public class GameBoardController implements BaseController {
             target.setUserData(marker);
             marker.setIndex(targetIndex);
         }
-            //delete button in user marker bar
-            this.mainController.getUserBoardController().removeMarkerBtn(ContextUtil.getCurrentMarker());
-            this.mainController.getUserBoardController().removeScoreImageView(stepCount);
-            if(ContextUtil.getCurrentPlayer().isWin() == true) {
-                System.out.println("go final stage");
-                winner = ContextUtil.getCurrentPlayer().getId();
-            }
 
+        //delete button in user marker bar
+        this.mainController.getUserBoardController().removeMarkerBtn(ContextUtil.getCurrentMarker());
+        this.mainController.getUserBoardController().removeScoreImageView(stepCount);
+        if (ContextUtil.getCurrentPlayer().isWin() == true) {
+            winner = ContextUtil.getCurrentPlayer().getId();
+            System.out.println("go final stage");
+        }
     }
 
-    public boolean checkForward(Marker marker, int targetIndex){
+    public boolean checkForward(Marker marker, int targetIndex) {
         if (marker == null) {
             return false;
         }
@@ -304,7 +292,7 @@ public class GameBoardController implements BaseController {
         // after move marker, change position
         stepCount = stepCount + changeTarget(marker.getIndex(), targetIndex);
         //check marker finish
-        if(checkMarkerEnd(targetIndex, stepCount) != stepCount) {
+        if (checkMarkerEnd(targetIndex, stepCount) != stepCount) {
             return true;
         }
         //can forward target
