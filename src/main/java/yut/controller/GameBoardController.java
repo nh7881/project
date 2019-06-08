@@ -69,12 +69,6 @@ public class GameBoardController implements BaseController {
             gameGrid.setOnMouseReleased(event -> {
                 ImageView imageView = (ImageView) event.getSource();
                 Marker marker = (Marker) imageView.getUserData();
-                if(marker != null) {
-                    System.out.println("marker data is " + marker.getId());
-                }
-                else{
-                    System.out.println("marker data is " + marker);
-                }
                 if (marker != null) {
                     if(checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))){
                         //eat other player's marker, make it go back user marker bar
@@ -225,12 +219,10 @@ public class GameBoardController implements BaseController {
                 if (stepCount <
                         this.mainController.getUserBoardController().getAllScore().get(i))
                 {
-                    System.out.println("succed" + targetid + "  " + stepCount);
                     return this.mainController.getUserBoardController().getAllScore().get(i);
                 }
             }
         }
-        System.out.println("failed" + targetid + "  " + stepCount);
         return stepCount;
     }
 
