@@ -1,15 +1,20 @@
 package yut.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import yut.YutGameApp;
 import yut.model.Marker;
 import yut.utils.ContextUtil;
 import yut.utils.SettingUtil;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -275,7 +280,7 @@ public class GameBoardController implements BaseController {
         this.mainController.getUserBoardController().removeScoreImageView(stepCount);
         if (ContextUtil.getCurrentPlayer().isWin() == true) {
             winner = ContextUtil.getCurrentPlayer().getId();
-            System.out.println("go final stage");
+            invokeResultDialog();
         }
     }
 
@@ -318,5 +323,31 @@ public class GameBoardController implements BaseController {
                     break;
             }
         }
+    }
+
+    private ResultDialogController invokeResultDialog() {
+        FXMLLoader loader = null;
+        AnchorPane page = null;
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            loader = new FXMLLoader();
+            loader.setLocation(YutGameApp.class.getResource("/view/ResultDialog.fxml"));
+            page = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage dialogStage = new Stage();
+        dialogStage.initOwner(YutGameApp.getPrimaryStage());
+        dialogStage.setTitle("Win!!!!");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        Scene scene = new Scene(page);
+
+        dialogStage.setScene(scene);
+        ResultDialogController controller = loader.getController();
+        controller.endGame(ContextUtil.getCurrentPlayer());
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+        return controller;
     }
 }

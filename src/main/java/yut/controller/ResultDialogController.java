@@ -1,5 +1,10 @@
 package yut.controller;
 
+import javafx.fxml.FXML;
+import yut.model.Player;
+import yut.utils.ContextUtil;
+
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -13,18 +18,19 @@ import java.util.ResourceBundle;
  */
 public class ResultDialogController implements BaseController {
 
-    private  boolean endAllow;
+    @FXML
+    private Label playerId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    public int endGame(int playerId) {
-        endAllow = false;
-        int winnerPlayer = playerId;
-        return winnerPlayer;
-    }
+    public void endGame(Player player) {
+        //end game first
+        ContextUtil.setData(ContextUtil.ContextKey.IS_START, false);
 
+        playerId.setText(String.valueOf(player.getId()));
+    }
 }
 
