@@ -252,11 +252,11 @@ public class GameBoardController implements BaseController {
     // check marker finish
     public int checkMarkerEnd(int markerid, int targetid, int stepCount) {
         int i = 0;
-        if (targetid == 0 && stepCount >= 0 && (markerid >=15 || markerid == 0)) {
+        if (targetid == 0 && stepCount > 0 && markerid >=15) {
             for(i = 0;
                 i <this.mainController.getUserBoardController().getAllScore().size();
                 i++ ) {
-                if (stepCount <
+                if (stepCount <=
                         this.mainController.getUserBoardController().getAllScore().get(i))
                 {
                     return this.mainController.getUserBoardController().getAllScore().get(i);
@@ -303,13 +303,16 @@ public class GameBoardController implements BaseController {
         this.setRoadSignImage(start);
 
         //check marker end
-        if(checkMarkerEnd(marker.getIndex(), targetIndex, stepCount) != stepCount ) { // when marker finish, discard first score.
+        if((checkMarkerEnd(marker.getIndex(), targetIndex, stepCount) != stepCount) ||
+                (targetIndex == 0 && this.mainController.getUserBoardController()
+                        .getAllScore().contains(stepCount)) ) { // when marker finish, discard first score.
             stepCount = checkMarkerEnd(marker.getIndex(), targetIndex, stepCount);
             target.setUserData(null);
             for(int i = 0; i < marker.getGroup().size(); i++) {
                 marker.getGroup().get(i).setHasEnded(true);
             }
             marker.setHasEnded(true);
+
         }
         else {
             //forward
@@ -327,9 +330,7 @@ public class GameBoardController implements BaseController {
             if(ContextUtil.getCurrentPlayer().isWin() == true) {
                 System.out.println("go final stage");
                 invokeResultDialog();
-
             }
-
     }
 
     public boolean checkForward(Marker marker, int targetIndex){
