@@ -17,6 +17,17 @@
 
 ## used language
  java, javafx
+ 
+## used tool
+ intellij idea 
+
+## How to excute
++clone our project
++open your IDE
++import our project by IDE
+  look!! make project by maven
++ run as YutGameApp
+
 
 ## Authors
 + @nh7881
