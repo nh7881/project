@@ -89,6 +89,7 @@ public class GameBoardController implements BaseController {
                                         marker.getGroup().get(n));
                                 marker.getGroup().remove(n);
                             }
+                            marker.setIndex(0);
                             ContextUtil.getCurrentMarker().getGroup().add(marker);
                         }
                         else {
@@ -103,6 +104,7 @@ public class GameBoardController implements BaseController {
                                         addMarkerBtn(marker.getGroup().get(n));
                                 marker.getGroup().remove(n);
                             }
+                            marker.setIndex(0);
                             this.mainController.getUserBoardController().addMarkerBtn(marker);
                         }
                         //this.mainController.getUserBoardController().addMarkerBtn(marker);
@@ -299,6 +301,9 @@ public class GameBoardController implements BaseController {
         if(checkMarkerEnd(marker.getIndex(), targetIndex, stepCount) != stepCount ) { // when marker finish, discard first score.
             stepCount = checkMarkerEnd(marker.getIndex(), targetIndex, stepCount);
             target.setUserData(null);
+            for(int i = 0; i < marker.getGroup().size(); i++) {
+                marker.getGroup().get(i).setHasEnded(true);
+            }
             marker.setHasEnded(true);
         }
         else {
