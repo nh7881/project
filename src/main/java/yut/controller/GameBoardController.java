@@ -270,7 +270,7 @@ public class GameBoardController implements BaseController {
         //check marker end
         if(checkMarkerEnd(targetIndex, stepCount) != stepCount ) { // when marker finish, discard first score.
             stepCount = checkMarkerEnd(targetIndex, stepCount);
-            target = null;
+            target.setUserData(null);
         }
         else {
             //forward
@@ -285,6 +285,7 @@ public class GameBoardController implements BaseController {
             //delete button in user marker bar
             this.mainController.getUserBoardController().removeMarkerBtn(ContextUtil.getCurrentMarker());
             this.mainController.getUserBoardController().removeScoreImageView(stepCount);
+            //this.mainController.getUserBoardController().getPlayerList()
 
     }
 
@@ -324,7 +325,6 @@ public class GameBoardController implements BaseController {
                 case 73:
                     gameGrid.setRotate(45);
                     break;
-
             }
         }
     }
