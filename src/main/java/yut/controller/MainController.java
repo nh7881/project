@@ -10,6 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 import yut.YutGameApp;
+import yut.model.Marker;
 import yut.utils.ContextUtil;
 
 import java.io.IOException;
@@ -36,6 +37,8 @@ public class MainController implements BaseController {
         userBoardController.init(this);
         gameBoardController.init(this);
     }
+
+    private Marker currentMarker;
 
     /**
      * start a new game
@@ -116,6 +119,19 @@ public class MainController implements BaseController {
 
     //algorithm implement
     public void playGame() {
+        /*currentMarker = ContextUtil.getCurrentMarker();
+        //(userBoardController.getAllScore().get(0) == -1)
+        System.out.println("run  ");
+        for(int  i = 0;  i < ContextUtil.getCurrentPlayer().getMarkerList().size(); i++)
+        {
+            if(ContextUtil.getCurrentPlayer().getMarkerList().get(i).getIndex() < 0
+                    && userBoardController.getAllScore().get(0) == -1) {
+                userBoardController.removeScoreImageView(-1);
+                //turn terminate
+            }
+        }*/
+        //userBoardController.mainController.gameBoardController.
+
 //        Player.isWin();
 //        userBoardController.getPlayerList();
 //        userBoardController.getAllScore();

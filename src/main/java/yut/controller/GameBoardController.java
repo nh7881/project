@@ -32,7 +32,6 @@ public class GameBoardController implements BaseController {
      * <p>
      * 11   71             51    4
      * <p>
-     * 12       22     23        3
      * 12       72     52        3
      * <p>
      * 13          73            2
@@ -67,10 +66,16 @@ public class GameBoardController implements BaseController {
             gameGrid.setOnMouseReleased(event -> {
                 ImageView imageView = (ImageView) event.getSource();
                 Marker marker = (Marker) imageView.getUserData();
+                if(marker != null) {
+                    System.out.println("marker data is " + marker.getId());
+                }
+                else{
+                    System.out.println("marker data is " + marker);
+                }
                 if (marker != null) {
                     if(checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))){
                         //eat other player's marker, make it go back user marker bar
-                        //this.mainController.getUserBoardController().addMarkerBtn(marker);
+                        this.mainController.getUserBoardController().addMarkerBtn(marker);
                     }else {
                         //set this marker is current marker, forward form here
                         ContextUtil.setCurrentMarker(marker);
@@ -194,7 +199,7 @@ public class GameBoardController implements BaseController {
             return 60;
         }
         else if(markerIndex == 0 && targetIndex == 75) {
-            return -74;
+            return -76;
         }
         else if(markerIndex == 54 && targetIndex == 73) {
             return -20;
@@ -210,17 +215,19 @@ public class GameBoardController implements BaseController {
     // check marker finish
     public int checkMarkerEnd(int targetid, int stepCount) {
         int i = 0;
-        if (targetid == 0) {
+        if (targetid == 0 & stepCount >= 0) {
             for(i = 0;
                 i <this.mainController.getUserBoardController().getAllScore().size();
                 i++ ) {
                 if (stepCount <
                         this.mainController.getUserBoardController().getAllScore().get(i))
                 {
+                    System.out.println("succed" + targetid + "  " + stepCount);
                     return this.mainController.getUserBoardController().getAllScore().get(i);
                 }
             }
         }
+        System.out.println("failed" + targetid + "  " + stepCount);
         return stepCount;
     }
 
@@ -256,14 +263,14 @@ public class GameBoardController implements BaseController {
         ImageView start = gameGridList.get(changeDialog(marker.getIndex()));
         ImageView target = gameGridList.get(changeDialog(targetIndex));
         //reset grid image
+        start.setUserData(null);
         start.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/blue_marker.png")));
         this.setRoadSignImage(start);
 
         //check marker end
         if(checkMarkerEnd(targetIndex, stepCount) != stepCount ) { // when marker finish, discard first score.
             stepCount = checkMarkerEnd(targetIndex, stepCount);
-            //if marker fade out, other source error, help me......sorry.....
-            //this.mainController.getUserBoardController().removeMarkerBtn(ContextUtil.getCurrentMarker());
+            target = null;
         }
         else {
             //forward
