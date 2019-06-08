@@ -2,6 +2,7 @@ package yut.model;
 
 import lombok.Data;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,6 +26,8 @@ public class Marker {
     private Boolean hasEnded;
 
     private Player ownPlayer;
+
+    ;private List<Marker> group;
 
     @Override
     public boolean equals(Object o) {

@@ -1,5 +1,6 @@
 package yut.controller;
 
+import cn.hutool.core.util.RandomUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,6 +104,7 @@ public class UserBoardController implements BaseController {
                     marker.setOwnPlayer(player);
                     markerList.add(marker);
                     marker.setHasEnded(false);
+                    marker.setGroup(new ArrayList<Marker>());
                 }
                 player.setMarkerList(markerList);
             });
@@ -178,6 +180,7 @@ public class UserBoardController implements BaseController {
      *
      * @param event
      */
+
     public void handleThrow(ActionEvent event) {
         if (!(Boolean) ContextUtil.getData(ContextUtil.ContextKey.IS_START)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -187,8 +190,22 @@ public class UserBoardController implements BaseController {
             alert.showAndWait();
             return;
         }
-
+        // check yut or mo and limit throw chance
+        for (int n = 0; n < getAllScore().size(); n++){
+            if(getAllScore().get(n) < 4) {
+                return;
+            }
+        }
         int score = YutUtil.throwYut();
+        // exception handling score first value -1
+        if(score == -1) {
+            for(int i = 0; i<ContextUtil.getCurrentPlayer().getMarkerList().size(); i++) {
+                if(ContextUtil.getCurrentPlayer().getMarkerList().get(i).getIndex() > 0) {
+                    break;
+                }
+                score = RandomUtil.randomInt(1, 6);
+            }
+        }
         ImageView imageView = new ImageView();
         imageView.setFitWidth(50.0);
         imageView.setFitHeight(50.0);
@@ -196,7 +213,6 @@ public class UserBoardController implements BaseController {
         imageView.setUserData(score);
         scoreHBox.getChildren().add(imageView);
     }
-
     private void renderUserMarkerBar() {
         //clear first
         userMarkerBarControllerMap.clear();

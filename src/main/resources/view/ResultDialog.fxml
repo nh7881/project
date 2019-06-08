@@ -5,21 +5,22 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="217.0" prefWidth="336.0" style="-fx-background-color: #56AFC1;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yut.controller.ResultDialogController">
-   <children>
-      <Label layoutX="81.0" layoutY="14.0" text="Winner" textFill="WHITE">
-         <font>
-            <Font size="50.0" />
-         </font>
-      </Label>
-      <Label layoutX="63.0" layoutY="102.0" text="Player" textFill="WHITE">
-         <font>
-            <Font size="50.0" />
-         </font>
-      </Label>
-      <Label fx:id="playerId" layoutX="237.0" layoutY="103.0" text="1" textFill="WHITE">
-         <font>
-            <Font size="50.0" />
-         </font>
-      </Label>
-   </children>
+    <children>
+        <Label layoutX="81.0" layoutY="14.0" text="Winner" textFill="WHITE">
+            <font>
+                <Font size="50.0" />
+            </font>
+        </Label>
+        <Label layoutX="63.0" layoutY="102.0" text="Player" textFill="WHITE">
+            <font>
+                <Font size="50.0" />
+            </font>
+        </Label>
+        <Label fx:id="playerId" layoutX="237.0" layoutY="103.0" text="1" textFill="WHITE">
+            <font>
+                <Font size="50.0" />
+            </font>
+        </Label>
+    </children>
+
 </AnchorPane>

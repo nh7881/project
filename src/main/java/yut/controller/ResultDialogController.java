@@ -1,13 +1,12 @@
 package yut.controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import yut.model.Player;
 import yut.utils.ContextUtil;
-
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Created with IntelliJ IDEA
@@ -31,7 +30,8 @@ public class ResultDialogController implements BaseController {
         //end game first
         ContextUtil.setData(ContextUtil.ContextKey.IS_START, false);
 
-        playerId.setText(String.valueOf(player.getId()));
+        playerId.setText(String.valueOf(player.getId() + 1));
     }
+
 }
 

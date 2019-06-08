@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import yut.YutGameApp;
 import yut.model.Marker;
-import yut.model.Player;
 import yut.utils.ContextUtil;
 
 import java.io.IOException;
@@ -21,6 +20,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import yut.model.Player;
+
 
 public class MainController implements BaseController {
 
