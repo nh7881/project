@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import yut.YutGameApp;
 import yut.model.Marker;
+import yut.model.Player;
 import yut.utils.ContextUtil;
 
 import java.io.IOException;

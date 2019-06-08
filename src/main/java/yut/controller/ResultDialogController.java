@@ -1,10 +1,11 @@
 package yut.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import yut.model.Player;
 import yut.utils.ContextUtil;
 
-import java.awt.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 

@@ -16,7 +16,7 @@
             <Font size="50.0" />
          </font>
       </Label>
-      <Label fx:id="playerId" layoutX="223.0" layoutY="103.0" textFill="WHITE">
+      <Label fx:id="playerId" layoutX="237.0" layoutY="103.0" text="1" textFill="WHITE">
          <font>
             <Font size="50.0" />
          </font>
