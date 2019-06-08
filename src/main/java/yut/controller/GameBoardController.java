@@ -216,9 +216,9 @@ public class GameBoardController implements BaseController {
         return 0;
     }
     // check marker finish
-    public int checkMarkerEnd(int targetid, int stepCount) {
+    public int checkMarkerEnd(int markerid, int targetid, int stepCount) {
         int i = 0;
-        if (targetid == 0 & stepCount >= 0) {
+        if (targetid == 0 && stepCount >= 0 && (markerid >=15 || markerid == 0)) {
             for(i = 0;
                 i <this.mainController.getUserBoardController().getAllScore().size();
                 i++ ) {
@@ -271,8 +271,8 @@ public class GameBoardController implements BaseController {
         this.setRoadSignImage(start);
 
         //check marker end
-        if(checkMarkerEnd(targetIndex, stepCount) != stepCount ) { // when marker finish, discard first score.
-            stepCount = checkMarkerEnd(targetIndex, stepCount);
+        if(checkMarkerEnd(marker.getIndex(), targetIndex, stepCount) != stepCount ) { // when marker finish, discard first score.
+            stepCount = checkMarkerEnd(marker.getIndex(), targetIndex, stepCount);
             target.setUserData(null);
             marker.setHasEnded(true);
         }
@@ -307,7 +307,7 @@ public class GameBoardController implements BaseController {
         // after move marker, change position
         stepCount = stepCount + changeTarget(marker.getIndex(), targetIndex);
         //check marker finish
-        if(checkMarkerEnd(targetIndex, stepCount) != stepCount) {
+        if(checkMarkerEnd(marker.getIndex(), targetIndex, stepCount) != stepCount) {
             return true;
         }
         //can forward target
