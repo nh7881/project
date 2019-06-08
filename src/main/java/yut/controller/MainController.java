@@ -132,7 +132,6 @@ public class MainController implements BaseController {
         }*/
         //userBoardController.mainController.gameBoardController.
 
-//        Player.isWin();
 //        userBoardController.getPlayerList();
 //        userBoardController.getAllScore();
 //        userBoardController.setProcessStateText("asdasd");

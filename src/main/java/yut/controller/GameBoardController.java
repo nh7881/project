@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import yut.YutGameApp;
 import yut.model.Marker;
 import yut.utils.ContextUtil;
@@ -45,6 +46,8 @@ public class GameBoardController implements BaseController {
     List<ImageView> gameGridList = new ArrayList<>(29);
 
     MainController mainController;
+
+    int winner;
 
     @FXML
     private AnchorPane gameGridPane;
@@ -271,6 +274,7 @@ public class GameBoardController implements BaseController {
         if(checkMarkerEnd(targetIndex, stepCount) != stepCount ) { // when marker finish, discard first score.
             stepCount = checkMarkerEnd(targetIndex, stepCount);
             target.setUserData(null);
+            marker.setHasEnded(true);
         }
         else {
             //forward
@@ -285,7 +289,10 @@ public class GameBoardController implements BaseController {
             //delete button in user marker bar
             this.mainController.getUserBoardController().removeMarkerBtn(ContextUtil.getCurrentMarker());
             this.mainController.getUserBoardController().removeScoreImageView(stepCount);
-            //this.mainController.getUserBoardController().getPlayerList()
+            if(ContextUtil.getCurrentPlayer().isWin() == true) {
+                System.out.println("go final stage");
+                winner = ContextUtil.getCurrentPlayer().getId();
+            }
 
     }
 

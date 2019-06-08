@@ -13,9 +13,18 @@ import java.util.ResourceBundle;
  */
 public class ResultDialogController implements BaseController {
 
+    private  boolean endAllow;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
+    public int endGame(int playerId) {
+        endAllow = false;
+        int winnerPlayer = playerId;
+        return winnerPlayer;
+    }
+
 }
+
