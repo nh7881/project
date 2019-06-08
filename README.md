@@ -25,7 +25,7 @@
 + clone our project
 + open your IDE
 + import our project by IDE
-    + look!! make project by maven
+    + look!! make project by maven!!
 + run as YutGameApp
 
 
