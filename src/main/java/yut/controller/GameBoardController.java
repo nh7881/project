@@ -115,6 +115,7 @@ public class GameBoardController implements BaseController {
                 }
 
                 if (this.mainController.getUserBoardController().getAllScore().size() == 0) {
+                    mainController.getUserBoardController().setNoyut(false);
                     ContextUtil.setCurrentPlayer(this.mainController.getUserBoardController().getNextPlayer(ContextUtil.getCurrentMarker().getOwnPlayer()));
                 }
             });

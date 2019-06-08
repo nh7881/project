@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
+import lombok.Setter;
 import yut.YutGameApp;
 import yut.model.Marker;
 import yut.model.Player;
@@ -35,6 +36,9 @@ import java.util.stream.Collectors;
  * Description: TODO
  */
 public class UserBoardController implements BaseController {
+
+    @Setter
+    private boolean noyut = false;
 
     @Getter
     private List<Player> playerList = new ArrayList<>();
@@ -193,25 +197,29 @@ public class UserBoardController implements BaseController {
 
         for (int n = 0; n < getAllScore().size(); n++){
             if(getAllScore().get(n) < 4) {
-                return;
+                noyut = true;
             }
         }
-        int score = YutUtil.throwYut();
+        if(noyut == false) {
 
-        if(score == -1) {
-            for(int i = 0; i<ContextUtil.getCurrentPlayer().getMarkerList().size(); i++) {
-                if(ContextUtil.getCurrentPlayer().getMarkerList().get(i).getIndex() > 0) {
-                    break;
+            int score = YutUtil.throwYut();
+
+            if (score == -1) {
+                for (int i = 0; i < ContextUtil.getCurrentPlayer().getMarkerList().size(); i++) {
+                    if (ContextUtil.getCurrentPlayer().getMarkerList().get(i).getIndex() > 0) {
+                        break;
+                    }
+                    score = RandomUtil.randomInt(1, 6);
                 }
-                score = RandomUtil.randomInt(1, 6);
             }
+
+            ImageView imageView = new ImageView();
+            imageView.setFitWidth(50.0);
+            imageView.setFitHeight(50.0);
+            imageView.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/score/circle" + score + ".png")));
+            imageView.setUserData(score);
+            scoreHBox.getChildren().add(imageView);
         }
-        ImageView imageView = new ImageView();
-        imageView.setFitWidth(50.0);
-        imageView.setFitHeight(50.0);
-        imageView.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/score/circle" + score + ".png")));
-        imageView.setUserData(score);
-        scoreHBox.getChildren().add(imageView);
     }
     private void renderUserMarkerBar() {
         //clear first
