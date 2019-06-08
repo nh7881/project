@@ -69,13 +69,10 @@ public class GameBoardController implements BaseController {
             gameGrid.setOnMouseReleased(event -> {
                 ImageView imageView = (ImageView) event.getSource();
                 Marker marker = (Marker) imageView.getUserData();
-                if(marker != null) {
-                    System.out.println("marker data is " + marker.getId());
-                }
-                else{
-                    System.out.println("marker data is " + marker);
-                }
+
                 if (marker != null) {
+                    System.out.println("marker data is " + marker.getId());
+
                     if(checkForward(ContextUtil.getCurrentMarker(), Integer.parseInt(imageView.getId()))){
                         //eat other player's marker, make it go back user marker bar
                         this.mainController.getUserBoardController().addMarkerBtn(marker);
