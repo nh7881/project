@@ -63,6 +63,7 @@ public class MainController implements BaseController {
             //init game data
             int playerCountNum = controller.getPlayerCountNum();
             int markerCountNum = controller.getMarkerCountNum();
+            gameBoardController.reRenderGameGrid();
             userBoardController.initPlayer(playerCountNum, markerCountNum);
 
             //set current player is play1
@@ -71,9 +72,7 @@ public class MainController implements BaseController {
             Runnable gameRule = () -> {
                 while (true) {
                     String processStateText = String.format("Play %d's Turn!!", ContextUtil.getCurrentPlayer().getId() + 1);
-
                     Platform.runLater(() -> userBoardController.setProcessStateText(processStateText));
-
                     try {
                         Thread.sleep(1500);
                     } catch (InterruptedException e) {

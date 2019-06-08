@@ -79,28 +79,23 @@ public class GameBoardController implements BaseController {
                         //eat other player's marker, make it go back user marker bar
                         if(ContextUtil.getCurrentMarker().getOwnPlayer().equals(marker.getOwnPlayer())) {
                             System.out.println("friend");
-                            System.out.println("target " + marker.getOwnPlayer().getId() + " " +
-                                    "marker " + ContextUtil.getCurrentMarker().getOwnPlayer().getId());
+                            System.out.println("target " + marker.getOwnPlayer().getId() + " " + "marker " + ContextUtil.getCurrentMarker().getOwnPlayer().getId());
+
                             int friend_index = marker.getGroup().size() - 1;
-                            System.out.println("food's group count is " + friend_index + 1
-                                    + "  my group count is " + ContextUtil.getCurrentMarker().getGroup().size());
+                            System.out.println("food's group count is " + friend_index + 1 + "  my group count is " + ContextUtil.getCurrentMarker().getGroup().size());
                             for(int n = friend_index; n >= 0; n--) {
-                                ContextUtil.getCurrentMarker().getGroup().add(
-                                        marker.getGroup().get(n));
+                                ContextUtil.getCurrentMarker().getGroup().add(marker.getGroup().get(n));
                                 marker.getGroup().remove(n);
                             }
                             ContextUtil.getCurrentMarker().getGroup().add(marker);
                         }
                         else {
                             System.out.println("Enemy");
-                            System.out.println("target " + marker.getOwnPlayer().getId() + " " +
-                                    "marker " + ContextUtil.getCurrentMarker().getOwnPlayer().getId());
+                            System.out.println("target " + marker.getOwnPlayer().getId() + " " + "marker " + ContextUtil.getCurrentMarker().getOwnPlayer().getId());
                             int enemy_index = marker.getGroup().size() - 1;
-                            System.out.println("food's group count is " + enemy_index + 1
-                                    + "  my group count is " + ContextUtil.getCurrentMarker().getGroup().size());
+                            System.out.println("food's group count is " + enemy_index + 1 + "  my group count is " + ContextUtil.getCurrentMarker().getGroup().size());
                             for(int n = enemy_index; n >= 0; n--) {
-                                this.mainController.getUserBoardController().
-                                        addMarkerBtn(marker.getGroup().get(n));
+                                this.mainController.getUserBoardController().addMarkerBtn(marker.getGroup().get(n));
                                 marker.getGroup().remove(n);
                             }
                             this.mainController.getUserBoardController().addMarkerBtn(marker);
@@ -196,6 +191,15 @@ public class GameBoardController implements BaseController {
                 AnchorPane.setLeftAnchor(gameGrid, 90.0);
             }
 
+            //set road sign image
+            this.setRoadSignImage(gameGrid);
+        });
+    }
+
+    public void reRenderGameGrid() {
+        gameGridList.forEach(gameGrid -> {
+            gameGrid.setImage(new Image(YutGameApp.class.getResourceAsStream("/res/blue_marker.png")));
+            gameGrid.setUserData(null);
             //set road sign image
             this.setRoadSignImage(gameGrid);
         });
