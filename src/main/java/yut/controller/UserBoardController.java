@@ -190,14 +190,14 @@ public class UserBoardController implements BaseController {
             alert.showAndWait();
             return;
         }
-        // check yut or mo and limit throw chance
+
         for (int n = 0; n < getAllScore().size(); n++){
             if(getAllScore().get(n) < 4) {
                 return;
             }
         }
         int score = YutUtil.throwYut();
-        // exception handling score first value -1
+
         if(score == -1) {
             for(int i = 0; i<ContextUtil.getCurrentPlayer().getMarkerList().size(); i++) {
                 if(ContextUtil.getCurrentPlayer().getMarkerList().get(i).getIndex() > 0) {
