@@ -102,6 +102,7 @@ public class UserBoardController implements BaseController {
                     marker.setIndex(0);
                     marker.setOwnPlayer(player);
                     markerList.add(marker);
+                    marker.setHasEnded(false);
                 }
                 player.setMarkerList(markerList);
             });

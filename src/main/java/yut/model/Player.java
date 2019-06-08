@@ -20,10 +20,13 @@ public class Player {
     private Integer id;
     private List<Marker> markerList;
 
-    boolean isWin() {
+    public boolean isWin() {
         for (Marker marker : markerList){
-            if(!marker.getHasEnded()){
+            if (!marker.getHasEnded()) {
                 return false;
+            }
+            else {
+                System.out.println("marker is null");
             }
         }
         return true;
